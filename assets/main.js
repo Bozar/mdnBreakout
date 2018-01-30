@@ -14,5 +14,6 @@ window.onload = function () {
     Game.canvas.clearCanvas()
     Game.entity.ball.drawBall()
     Game.system.moveElement(Game.entity.ball)
+    Game.system.bounceOffWall(Game.entity.ball)
   }, 10)
 }

@@ -25,11 +25,29 @@ Game.system.hasMixins = function (checkObject, mixinArray) {
   return true
 }
 
-Game.system.moveElement = (element) => {
+Game.system.moveElement = function (element) {
   if (!Game.system.hasMixins(Game.entity.ball, ['x', 'y', 'dx', 'dy'])) {
     return false
   }
   element.x += element.dx
   element.y += element.dy
+  return true
+}
+
+Game.system.bounceOffWall = function (element) {
+  if (!Game.system.hasMixins(Game.entity.ball,
+    ['x', 'y', 'dx', 'dy', 'radius'])) {
+    return false
+  }
+  if (
+    (element.x + element.dx > Game.canvas.getElement.width - element.radius) ||
+    (element.x + element.dx < element.radius)) {
+    element.dx = -element.dx
+  }
+  if (
+    (element.y + element.dy > Game.canvas.getElement.height - element.radius) ||
+    (element.y + element.dy < element.radius)) {
+    element.dy = -element.dy
+  }
   return true
 }
