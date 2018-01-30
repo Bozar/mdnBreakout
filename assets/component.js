@@ -3,8 +3,8 @@
 Game.component = {}
 
 Game.component.ballData = {
-  'x': Game.canvas.getElement.width / 2,
-  'y': Game.canvas.getElement.height - 30,
+  'x': Game.canvas.getWidth / 2,
+  'y': Game.canvas.getHeight - 30,
   'radius': 10,
   'color': '#2d96ff'
 }

@@ -40,12 +40,12 @@ Game.system.bounceOffWall = function (element) {
     return false
   }
   if (
-    (element.x + element.dx > Game.canvas.getElement.width - element.radius) ||
+    (element.x + element.dx > Game.canvas.getWidth - element.radius) ||
     (element.x + element.dx < element.radius)) {
     element.dx = -element.dx
   }
   if (
-    (element.y + element.dy > Game.canvas.getElement.height - element.radius) ||
+    (element.y + element.dy > Game.canvas.getHeight - element.radius) ||
     (element.y + element.dy < element.radius)) {
     element.dy = -element.dy
   }
