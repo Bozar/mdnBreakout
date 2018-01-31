@@ -3,24 +3,35 @@
 Game.component = {}
 
 Game.component.ballData = {
+  'entityName': 'ball',
   'x': Game.canvas.getWidth / 2,
   'y': Game.canvas.getHeight - 30,
   'radius': 10,
-  'color': '#2d96ff'
+  'color': '#2d96ff',
+  'dX': 2,
+  'dY': -2
 }
 
 Game.component.shiftData = (Base) => class extends Base {
   constructor () {
     super()
-    this.dx = 2
-    this.dy = -2
+    switch (this.entityName) {
+      case Game.component.ballData.entityName:
+        this.dx = Game.component.ballData.dX
+        this.dy = Game.component.ballData.dY
+        break
+      default:
+        this.dx = null
+        this.dy = null
+        break
+    }
   }
 }
 
 Game.component.ballShape = (Base) => class extends Base {
   constructor () {
     super()
-    this.entityName = 'ball'
+    this.entityName = Game.component.ballData.entityName
     this.x = Game.component.ballData.x
     this.y = Game.component.ballData.y
     this.radius = Game.component.ballData.radius
