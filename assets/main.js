@@ -21,6 +21,7 @@ Object.defineProperties(Game.canvas, {
 window.onload = function () {
   setInterval(() => {
     Game.canvas.clearCanvas()
+    Game.entity.paddle.drawPaddle()
     Game.entity.ball.drawBall()
     Game.system.moveElement(Game.entity.ball)
     Game.system.bounceOffWall(Game.entity.ball)

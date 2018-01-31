@@ -26,28 +26,28 @@ Game.system.hasMixins = function (checkObject, mixinArray) {
 }
 
 Game.system.moveElement = function (element) {
-  if (!Game.system.hasMixins(Game.entity.ball, ['x', 'y', 'dx', 'dy'])) {
+  if (!Game.system.hasMixins(Game.entity.ball, ['x', 'y', 'dX', 'dY'])) {
     return false
   }
-  element.x += element.dx
-  element.y += element.dy
+  element.x += element.dX
+  element.y += element.dY
   return true
 }
 
 Game.system.bounceOffWall = function (element) {
   if (!Game.system.hasMixins(Game.entity.ball,
-    ['x', 'y', 'dx', 'dy', 'radius'])) {
+    ['x', 'y', 'dX', 'dY', 'radius'])) {
     return false
   }
   if (
-    (element.x + element.dx > Game.canvas.getWidth - element.radius) ||
-    (element.x + element.dx < element.radius)) {
-    element.dx = -element.dx
+    (element.x + element.dX > Game.canvas.getWidth - element.radius) ||
+    (element.x + element.dX < element.radius)) {
+    element.dX = -element.dX
   }
   if (
-    (element.y + element.dy > Game.canvas.getHeight - element.radius) ||
-    (element.y + element.dy < element.radius)) {
-    element.dy = -element.dy
+    (element.y + element.dY > Game.canvas.getHeight - element.radius) ||
+    (element.y + element.dY < element.radius)) {
+    element.dY = -element.dY
   }
   return true
 }
