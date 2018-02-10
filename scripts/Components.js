@@ -24,3 +24,9 @@ Game.Components.Shape = function (radius, width, height, color) {
   this.height = height > 0 ? height : undefined
   this.radius = radius > 0 ? radius : undefined
 }
+
+Game.Components.MovePaddle = function (distance) {
+  this.name = 'movePaddle'
+
+  this.distance = distance || 7
+}

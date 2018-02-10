@@ -15,4 +15,5 @@ Game.entities.paddle.addComponent(new Game.Components.Shape(0, 75, 10))
 Game.entities.paddle.addComponent(new Game.Components.Position(
   (Game.canvas.getWidth() - Game.entities.paddle.components.shape.width) / 2,
   Game.canvas.getHeight() - Game.entities.paddle.components.shape.height))
+Game.entities.paddle.addComponent(new Game.Components.MovePaddle())
 Game.entities.entitiesList.push(Game.entities.paddle)
