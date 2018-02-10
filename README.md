@@ -6,5 +6,5 @@ Be the one ball to crush them all!
 
 ## Reference
 
-[How to Build an Entity Component System Game in Javascript]()
+* [How to Build an Entity Component System Game in Javascript](http://vasir.net/blog/game-development/how-to-build-entity-component-system-in-javascript)
 
