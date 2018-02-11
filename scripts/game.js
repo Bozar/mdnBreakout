@@ -72,10 +72,12 @@ window.onload = function () {
   setInterval(function () {
     Game.canvas.clearCanvas()
 
-    Game.system.drawBall(el)
-    Game.system.drawRectangle(el)
-    Game.system.moveElement(el)
-    Game.system.bounceOffWall(el)
+    Game.system.drawBall(el.get('movable'))
+    Game.system.drawRectangle(el.get('movable'))
+    Game.system.drawRectangle(el.get('brick'))
+    Game.system.moveElement(el.get('movable'))
+    Game.system.bounceOffWall(el.get('movable'))
+    Game.system.collideWithBricks(el.get('brick'), Game.entities.ball)
 
     Game.userControl.movePaddle()
   }, 10)

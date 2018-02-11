@@ -71,3 +71,19 @@ Game.system.bounceOffWall = function (entities) {
     }
   }
 }
+
+Game.system.collideWithBricks = function (entities, ball) {
+  for (let i = 0; i < entities.length; i++) {
+    let e = entities[i]
+
+    if (ball.position.x >= e.position.x &&
+      ball.position.x <= e.position.x + e.shape.width &&
+      ball.position.y >= e.position.y &&
+      ball.position.y <= e.position.y + e.shape.height) {
+      ball.shift.dx = -ball.shift.dx
+      ball.shift.dy = -ball.shift.dy
+      entities.splice(i, 1)
+      break
+    }
+  }
+}

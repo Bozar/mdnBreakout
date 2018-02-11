@@ -1,14 +1,16 @@
 'use strict'
 
 Game.entities = {}
-Game.entities.entitiesList = []
+Game.entities.entitiesList = new Map()
+Game.entities.entitiesList.set('movable', [])
+Game.entities.entitiesList.set('brick', [])
 
 Game.entities.ball = new Game.Entity('ball')
 Game.entities.ball.addComponent(new Game.Components.Shape(10))
 Game.entities.ball.addComponent(new Game.Components.Position(
   Game.canvas.getWidth() / 2, Game.canvas.getHeight() - 30))
 Game.entities.ball.addComponent(new Game.Components.Shift(2, -2))
-Game.entities.entitiesList.push(Game.entities.ball)
+Game.entities.entitiesList.get('movable').push(Game.entities.ball)
 
 Game.entities.paddle = new Game.Entity('paddle')
 Game.entities.paddle.addComponent(new Game.Components.Shape(0, 75, 10))
@@ -16,15 +18,13 @@ Game.entities.paddle.addComponent(new Game.Components.Position(
   (Game.canvas.getWidth() - Game.entities.paddle.shape.width) / 2,
   Game.canvas.getHeight() - Game.entities.paddle.shape.height))
 Game.entities.paddle.addComponent(new Game.Components.MovePaddle())
-Game.entities.entitiesList.push(Game.entities.paddle)
+Game.entities.entitiesList.get('movable').push(Game.entities.paddle)
 
-Game.entities.brickBlueprint = new Game.Entity('brickBlueprint')
-Game.entities.brickBlueprint.addComponent(new Game.Components.Arrangement())
-Game.entities.brickBlueprint.addComponent(new Game.Components.ArraySize())
-
-Game.entities.brickCreation = (function () {
+Game.entities.brickCreation = function () {
   let e = Game.entities
-  let blueprint = e.brickBlueprint
+  let blueprint = new Game.Entity()
+  blueprint.addComponent(new Game.Components.Arrangement())
+  blueprint.addComponent(new Game.Components.ArraySize())
 
   for (let i = 0; i < blueprint.arraySize.row; i++) {
     for (let j = 0; j < blueprint.arraySize.column; j++) {
@@ -39,7 +39,8 @@ Game.entities.brickCreation = (function () {
         blueprint.arrangement.offsetTop
       ))
 
-      Game.entities.entitiesList.push(brick)
+      Game.entities.entitiesList.get('brick').push(brick)
     }
   }
-}())
+}
+Game.entities.brickCreation()
