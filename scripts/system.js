@@ -44,6 +44,8 @@ Game.system.moveElement = function (entities) {
 }
 
 Game.system.bounceOffWall = function (entities) {
+  let paddle = Game.entities.paddle
+
   for (let i = 0; i < entities.length; i++) {
     let e = entities[i]
 
@@ -54,10 +56,17 @@ Game.system.bounceOffWall = function (entities) {
         e.shift.dx = -e.shift.dx
       }
 
-      if ((e.position.y + e.shift.dy >
-        Game.canvas.getHeight() - e.shape.radius) ||
-        (e.position.y + e.shift.dy < e.shape.radius)) {
+      if (e.position.y + e.shift.dy < e.shape.radius) {
         e.shift.dy = -e.shift.dy
+      } else if (e.position.y + e.shift.dy >
+        Game.canvas.getHeight() - e.shape.radius) {
+        if (e.position.x >= paddle.position.x &&
+          e.position.x <= paddle.position.x + paddle.shape.width) {
+          e.shift.dy = -e.shift.dy
+        } else {
+          window.alert('Game Over')
+          document.location.reload()
+        }
       }
     }
   }
