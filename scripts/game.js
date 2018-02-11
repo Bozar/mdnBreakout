@@ -43,17 +43,18 @@ Game.userControl.listenInput = function () {
 
   document.addEventListener('mousemove', function (e) {
     let relativeX = e.clientX - Game.canvas.offsetLeft
-    let halfWidth = Game.entities.paddle.components.shape.width / 2
+    let halfWidth = Game.entities.paddle.shape.width / 2
+
     if (relativeX > halfWidth &&
       relativeX < Game.canvas.getWidth() - halfWidth) {
-      Game.entities.paddle.components.position.x = relativeX - halfWidth
+      Game.entities.paddle.position.x = relativeX - halfWidth
     }
   })
 }
 
 Game.userControl.movePaddle = function () {
   let control = Game.userControl
-  let paddle = Game.entities.paddle.components
+  let paddle = Game.entities.paddle
 
   if (control.leftPressed && paddle.position.x > 0) {
     paddle.position.x -= paddle.movePaddle.distance

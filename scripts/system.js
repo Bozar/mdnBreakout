@@ -4,13 +4,13 @@ Game.system = {}
 
 Game.system.drawBall = function (entities) {
   for (let i = 0; i < entities.length; i++) {
-    let ec = entities[i].components
+    let e = entities[i]
 
-    if (ec.shape && ec.shape.radius) {
+    if (e.shape && e.shape.radius) {
       Game.canvas.ctx.beginPath()
-      Game.canvas.ctx.arc(ec.position.x, ec.position.y,
-        ec.shape.radius, 0, Math.PI * 2)
-      Game.canvas.ctx.fillStyle = ec.shape.color
+      Game.canvas.ctx.arc(e.position.x, e.position.y,
+        e.shape.radius, 0, Math.PI * 2)
+      Game.canvas.ctx.fillStyle = e.shape.color
       Game.canvas.ctx.fill()
       Game.canvas.ctx.closePath()
     }
@@ -19,13 +19,13 @@ Game.system.drawBall = function (entities) {
 
 Game.system.drawPaddle = function (entities) {
   for (let i = 0; i < entities.length; i++) {
-    let ec = entities[i].components
+    let e = entities[i]
 
-    if (ec.shape && ec.shape.width && ec.shape.height) {
+    if (e.shape && e.shape.width && e.shape.height) {
       Game.canvas.ctx.beginPath()
-      Game.canvas.ctx.rect(ec.position.x, ec.position.y,
-        ec.shape.width, ec.shape.height)
-      Game.canvas.ctx.fillStyle = ec.shape.color
+      Game.canvas.ctx.rect(e.position.x, e.position.y,
+        e.shape.width, e.shape.height)
+      Game.canvas.ctx.fillStyle = e.shape.color
       Game.canvas.ctx.fill()
       Game.canvas.ctx.closePath()
     }
@@ -34,30 +34,30 @@ Game.system.drawPaddle = function (entities) {
 
 Game.system.moveElement = function (entities) {
   for (let i = 0; i < entities.length; i++) {
-    let ec = entities[i].components
+    let e = entities[i]
 
-    if (ec.shift && ec.position) {
-      ec.position.x += ec.shift.dx
-      ec.position.y += ec.shift.dy
+    if (e.shift && e.position) {
+      e.position.x += e.shift.dx
+      e.position.y += e.shift.dy
     }
   }
 }
 
 Game.system.bounceOffWall = function (entities) {
   for (let i = 0; i < entities.length; i++) {
-    let ec = entities[i].components
+    let e = entities[i]
 
-    if (ec.shift && ec.position && ec.shape && ec.shape.radius) {
-      if ((ec.position.x + ec.shift.dx >
-        Game.canvas.getWidth() - ec.shape.radius) ||
-        (ec.position.x + ec.shift.dx < ec.shape.radius)) {
-        ec.shift.dx = -ec.shift.dx
+    if (e.shift && e.position && e.shape && e.shape.radius) {
+      if ((e.position.x + e.shift.dx >
+        Game.canvas.getWidth() - e.shape.radius) ||
+        (e.position.x + e.shift.dx < e.shape.radius)) {
+        e.shift.dx = -e.shift.dx
       }
 
-      if ((ec.position.y + ec.shift.dy >
-        Game.canvas.getHeight() - ec.shape.radius) ||
-        (ec.position.y + ec.shift.dy < ec.shape.radius)) {
-        ec.shift.dy = -ec.shift.dy
+      if ((e.position.y + e.shift.dy >
+        Game.canvas.getHeight() - e.shape.radius) ||
+        (e.position.y + e.shift.dy < e.shape.radius)) {
+        e.shift.dy = -e.shift.dy
       }
     }
   }
