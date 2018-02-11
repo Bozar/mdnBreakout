@@ -73,7 +73,7 @@ window.onload = function () {
     Game.canvas.clearCanvas()
 
     Game.system.drawBall(el)
-    Game.system.drawPaddle(el)
+    Game.system.drawRectangle(el)
     Game.system.moveElement(el)
     Game.system.bounceOffWall(el)
 

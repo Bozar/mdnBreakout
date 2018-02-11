@@ -1,6 +1,6 @@
 'use strict'
 
-Game.Entity = function () {
+Game.Entity = function (name) {
   this.id = (function () {
     // 12345678-{repeat}-{repeat}-{repeat}
     let randomNumber = ''
@@ -10,6 +10,8 @@ Game.Entity = function () {
     }
     return randomNumber.replace(/.{8}/g, '$&' + '-').slice(0, 35)
   }())
+
+  this.entityName = name
 }
 
 Game.Entity.prototype.getID = function () { return this.id }

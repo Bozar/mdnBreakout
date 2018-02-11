@@ -30,3 +30,18 @@ Game.Components.MovePaddle = function (distance) {
 
   this.distance = distance || 7
 }
+
+Game.Components.Arrangement = function (padding, offsetLeft, offsetTop) {
+  this.name = 'arrangement'
+
+  this.padding = padding || 10
+  this.offsetLeft = offsetLeft || 30
+  this.offsetTop = offsetTop || 30
+}
+
+Game.Components.ArraySize = function (row, column) {
+  this.name = 'arraySize'
+
+  this.row = row || 3
+  this.column = column || 5
+}

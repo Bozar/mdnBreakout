@@ -17,7 +17,7 @@ Game.system.drawBall = function (entities) {
   }
 }
 
-Game.system.drawPaddle = function (entities) {
+Game.system.drawRectangle = function (entities) {
   for (let i = 0; i < entities.length; i++) {
     let e = entities[i]
 
