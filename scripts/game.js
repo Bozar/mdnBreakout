@@ -2,14 +2,13 @@
 
 var Game = {}
 
-Game.canvas = {}
-Game.canvas.getElement = document.getElementById('myCanvas')
-Game.canvas.ctx = Game.canvas.getElement.getContext('2d')
+Game.canvas = document.getElementById('myCanvas')
+Game.canvas.ctx = Game.canvas.getContext('2d')
 Game.canvas.clearCanvas = function () {
   this.ctx.clearRect(0, 0, this.getWidth(), this.getHeight())
 }
-Game.canvas.getWidth = function () { return this.getElement.width }
-Game.canvas.getHeight = function () { return this.getElement.height }
+Game.canvas.getWidth = function () { return this.width }
+Game.canvas.getHeight = function () { return this.height }
 
 Game.userControl = {}
 Game.userControl.keyMap = new Map()
@@ -39,6 +38,15 @@ Game.userControl.listenInput = function () {
         Game.userControl[key + 'Pressed'] = false
         break
       }
+    }
+  })
+
+  document.addEventListener('mousemove', function (e) {
+    let relativeX = e.clientX - Game.canvas.offsetLeft
+    let halfWidth = Game.entities.paddle.components.shape.width / 2
+    if (relativeX > halfWidth &&
+      relativeX < Game.canvas.getWidth() - halfWidth) {
+      Game.entities.paddle.components.position.x = relativeX - halfWidth
     }
   })
 }
