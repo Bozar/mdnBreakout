@@ -65,13 +65,18 @@ Game.userControl.movePaddle = function () {
 }
 
 window.onload = function () {
+  Game.entities.create()
+  Game.system.saveInitialValues()
   Game.userControl.addKeys(Game.userControl.keyMap)
   Game.userControl.listenInput()
 
-  let el = Game.entities.entitiesList
-  setInterval(function () {
+  let el = Game.entities.mapList
+  mainLoop()
+
+  function mainLoop () {
     Game.canvas.clearCanvas()
 
+    Game.system.drawUI(el.get('ui'))
     Game.system.drawBall(el.get('movable'))
     Game.system.drawRectangle(el.get('movable'))
     Game.system.drawRectangle(el.get('brick'))
@@ -80,5 +85,8 @@ window.onload = function () {
     Game.system.collideWithBricks(el.get('brick'), Game.entities.ball)
 
     Game.userControl.movePaddle()
-  }, 10)
+    Game.system.win()
+
+    window.requestAnimationFrame(mainLoop)
+  }
 }

@@ -45,3 +45,23 @@ Game.Components.ArraySize = function (row, column) {
   this.row = row || 3
   this.column = column || 5
 }
+
+Game.Components.UI = function (text, value, change, font) {
+  this.name = 'ui'
+
+  this.text = text
+  this.value = value
+  this.change = change
+  this.font = font || '16px Arial'
+}
+
+Game.Components.InitialValues =
+  function (ballX, ballY, ballDx, ballDy, paddleX) {
+    this.name = 'initialValues'
+
+    this.ballX = undefined
+    this.ballY = undefined
+    this.ballDx = undefined
+    this.ballDy = undefined
+    this.paddleX = undefined
+  }

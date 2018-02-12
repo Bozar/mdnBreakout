@@ -1,26 +1,40 @@
 'use strict'
 
 Game.entities = {}
-Game.entities.entitiesList = new Map()
-Game.entities.entitiesList.set('movable', [])
-Game.entities.entitiesList.set('brick', [])
+Game.entities.mapList = new Map()
+Game.entities.mapList.set('movable', [])
+Game.entities.mapList.set('brick', [])
+Game.entities.mapList.set('ui', [])
 
-Game.entities.ball = new Game.Entity('ball')
-Game.entities.ball.addComponent(new Game.Components.Shape(10))
-Game.entities.ball.addComponent(new Game.Components.Position(
-  Game.canvas.getWidth() / 2, Game.canvas.getHeight() - 30))
-Game.entities.ball.addComponent(new Game.Components.Shift(2, -2))
-Game.entities.entitiesList.get('movable').push(Game.entities.ball)
+Game.entities.create = function () {
+  for (const key in this.create) {
+    if (this.create.hasOwnProperty(key)) {
+      this.create[key]()
+    }
+  }
+}
 
-Game.entities.paddle = new Game.Entity('paddle')
-Game.entities.paddle.addComponent(new Game.Components.Shape(0, 75, 10))
-Game.entities.paddle.addComponent(new Game.Components.Position(
-  (Game.canvas.getWidth() - Game.entities.paddle.shape.width) / 2,
-  Game.canvas.getHeight() - Game.entities.paddle.shape.height))
-Game.entities.paddle.addComponent(new Game.Components.MovePaddle())
-Game.entities.entitiesList.get('movable').push(Game.entities.paddle)
+Game.entities.create.ball = function () {
+  Game.entities.ball = new Game.Entity('ball')
+  Game.entities.ball.addComponent(new Game.Components.Shape(10))
+  Game.entities.ball.addComponent(new Game.Components.Position(
+    Game.canvas.getWidth() / 2, Game.canvas.getHeight() - 30))
+  Game.entities.ball.addComponent(new Game.Components.Shift(
+    (Math.random() > 0.5 ? 1 : -1) * 2, (Math.random() > 0.5 ? 1 : -1) * 2))
+  Game.entities.mapList.get('movable').push(Game.entities.ball)
+}
 
-Game.entities.brickCreation = function () {
+Game.entities.create.paddle = function () {
+  Game.entities.paddle = new Game.Entity('paddle')
+  Game.entities.paddle.addComponent(new Game.Components.Shape(0, 75, 10))
+  Game.entities.paddle.addComponent(new Game.Components.Position(
+    (Game.canvas.getWidth() - Game.entities.paddle.shape.width) / 2,
+    Game.canvas.getHeight() - Game.entities.paddle.shape.height))
+  Game.entities.paddle.addComponent(new Game.Components.MovePaddle())
+  Game.entities.mapList.get('movable').push(Game.entities.paddle)
+}
+
+Game.entities.create.brick = function () {
   let e = Game.entities
   let blueprint = new Game.Entity()
   blueprint.addComponent(new Game.Components.Arrangement())
@@ -39,8 +53,33 @@ Game.entities.brickCreation = function () {
         blueprint.arrangement.offsetTop
       ))
 
-      Game.entities.entitiesList.get('brick').push(brick)
+      Game.entities.mapList.get('brick').push(brick)
     }
   }
 }
-Game.entities.brickCreation()
+
+Game.entities.create.ui = function () {
+  let e = Game.entities
+
+  e.uiScore = new Game.Entity('uiScore')
+  e.uiScore.addComponent(new Game.Components.UI('Score: ', 0, 100))
+  e.uiScore.addComponent(new Game.Components.Position(8, 20))
+  e.uiScore.addComponent(new Game.Components.Shape())
+
+  Game.entities.mapList.get('ui').push(e.uiScore)
+
+  e.uiLife = new Game.Entity('uiLife')
+  e.uiLife.addComponent(new Game.Components.UI('Lives: ', 5, 1))
+  e.uiLife.addComponent(new Game.Components.Position(
+    Game.canvas.getWidth() - 65, 20))
+  e.uiLife.addComponent(new Game.Components.Shape())
+
+  Game.entities.mapList.get('ui').push(e.uiLife)
+}
+
+Game.entities.create.initialValues = function () {
+  let e = Game.entities
+
+  e.initialValues = new Game.Entity('initialValues')
+  e.initialValues.addComponent(new Game.Components.InitialValues())
+}

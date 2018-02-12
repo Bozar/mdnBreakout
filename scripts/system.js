@@ -32,6 +32,16 @@ Game.system.drawRectangle = function (entities) {
   }
 }
 
+Game.system.drawUI = function (entities) {
+  for (let i = 0; i < entities.length; i++) {
+    let e = entities[i]
+
+    Game.canvas.ctx.font = e.ui.font
+    Game.canvas.ctx.fillStyle = e.shape.color
+    Game.canvas.ctx.fillText(e.ui.text + e.ui.value, e.position.x, e.position.y)
+  }
+}
+
 Game.system.moveElement = function (entities) {
   for (let i = 0; i < entities.length; i++) {
     let e = entities[i]
@@ -44,7 +54,8 @@ Game.system.moveElement = function (entities) {
 }
 
 Game.system.bounceOffWall = function (entities) {
-  let paddle = Game.entities.paddle
+  let ge = Game.entities
+  let paddle = ge.paddle
 
   for (let i = 0; i < entities.length; i++) {
     let e = entities[i]
@@ -64,8 +75,19 @@ Game.system.bounceOffWall = function (entities) {
           e.position.x <= paddle.position.x + paddle.shape.width) {
           e.shift.dy = -e.shift.dy
         } else {
-          window.alert('Game Over')
-          document.location.reload()
+          ge.uiLife.ui.value -= ge.uiLife.ui.change
+          ge.uiScore.ui.value += ge.uiLife.ui.change
+
+          if (Game.entities.uiLife.ui.value < 0) {
+            window.alert('Game Over')
+            document.location.reload()
+          } else {
+            ge.ball.position.x = ge.initialValues.ballX
+            ge.ball.position.y = ge.initialValues.ballY
+            ge.ball.shift.dx = (Math.random() > 0.5 ? 1 : -1) * 2
+            ge.ball.shift.dy = (Math.random() > 0.5 ? 1 : -1) * 2
+            ge.paddle.position.x = ge.initialValues.paddleX
+          }
         }
       }
     }
@@ -82,8 +104,27 @@ Game.system.collideWithBricks = function (entities, ball) {
       ball.position.y <= e.position.y + e.shape.height) {
       ball.shift.dx = -ball.shift.dx
       ball.shift.dy = -ball.shift.dy
+
+      Game.entities.uiScore.ui.value += Game.entities.uiScore.ui.change
       entities.splice(i, 1)
       break
     }
   }
+}
+
+Game.system.win = function () {
+  if (Game.entities.mapList.get('brick').length === 0) {
+    window.alert('You Win!\nFinal Score: ' + Game.entities.uiScore.ui.value)
+    document.location.reload()
+  }
+}
+
+Game.system.saveInitialValues = function () {
+  let e = Game.entities
+
+  e.initialValues.ballX = e.ball.position.x
+  e.initialValues.ballY = e.ball.position.y
+  e.initialValues.ballDx = e.ball.shift.dx
+  e.initialValues.ballDy = e.ball.shift.dy
+  e.initialValues.paddleX = e.paddle.position.x
 }
